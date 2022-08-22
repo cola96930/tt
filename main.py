@@ -41,6 +41,21 @@ def get_tbirthday():
     next = next.replace(year=next.year + 1)
   return (next - today).days
 
+def tip():
+    if (tianqi_API!="否"):
+        conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+        params = urllib.parse.urlencode({'key':tianqi_API,'city':city})
+        headers = {'Content-type':'application/x-www-form-urlencoded'}
+        conn.request('POST','/tianqi/index',params,headers)
+        res = conn.getresponse()
+        data = res.read()
+        data = json.loads(data)
+        pop = data["newslist"][0]["pop"]
+        tips = data["newslist"][0]["tips"]
+        return pop,tips
+    else:
+        return "",""
+
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
   if words.status_code != 200:
@@ -55,6 +70,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"tips":{"value":tip},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
