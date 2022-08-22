@@ -5,6 +5,8 @@ from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
 import os
 import random
+import http.client, urllib
+import json
 
 today = datetime.now()
 start_date = os.environ['START_DATE']
@@ -44,7 +46,7 @@ def get_tbirthday():
 def tip():
     if (tianqi_API!="否"):
         conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
-        params = urllib.parse.urlencode({'key':tianqi_API,'city':city})
+        params = urllib.parse.urlencode({'key':a59bb78a1149fb897531644c84f7d262,'city':上海市})
         headers = {'Content-type':'application/x-www-form-urlencoded'}
         conn.request('POST','/tianqi/index',params,headers)
         res = conn.getresponse()
