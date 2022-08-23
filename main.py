@@ -61,6 +61,15 @@ def lizhi():
     data = json.loads(data)
     return data["newslist"][0]["saying"]
 
+def kqzl():
+    conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+    params = urllib.parse.urlencode({'key':'a59bb78a1149fb897531644c84f7d262','area':'上海'})
+    headers = {'Content-type':'application/x-www-form-urlencoded'}
+    conn.request('POST','/aqi/index',params,headers)
+    res = conn.getresponse()
+    data = res.read()
+    print(data.decode('utf-8'))
+  
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
@@ -69,6 +78,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"lizhi":{"value":lizhi()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"lizhi":{"value":lizhi()},"kqzl":{"value":kqzl()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
