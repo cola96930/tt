@@ -5,6 +5,8 @@ from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
 import os
 import random
+import http.client, urllib
+import json
 
 
 today = datetime.now()
@@ -49,6 +51,16 @@ def get_words():
     return get_words()
   return words.json()['data']['text']
 
+def lizhi():
+    conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+    params = urllib.parse.urlencode({'key':'a59bb78a1149fb897531644c84f7d262'})
+    headers = {'Content-type':'application/x-www-form-urlencoded'}
+    conn.request('POST','/lzmy/index',params,headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = json.loads(data)
+    return data["newslist"][0]["saying"]
+
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
@@ -57,6 +69,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"lizhi":{"value":lizhi()},"birthday_left":{"value":get_birthday()},"tbirthday_left":{"value":get_tbirthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
