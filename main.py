@@ -73,15 +73,16 @@ def kqzl():
 
 def tq():
     conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
-    params = urllib.parse.urlencode({'key':'a59bb78a1149fb897531644c84f7d262','area':'上海'})
-    headers = {'Content-type':'application/x-www-form-urlencoded'}
-    conn.request('POST','/tiqi/index',params,headers)
-    res = conn.getresponse()
-    data = res.read()
-    data = json.loads(data)
-    pop = data["newslist"][0]["pop"]
-    tips = data["newslist"][0]["tips"]
-    return pop,tips
+   params = urllib.parse.urlencode({'key':'a59bb78a1149fb897531644c84f7d262','area':'上海'})
+        headers = {'Content-type':'application/x-www-form-urlencoded'}
+        conn.request('POST','/tianqi/index',params,headers)
+        res = conn.getresponse()
+        data = res.read()
+        data = json.loads(data)
+        pop = data["newslist"][0]["pop"]
+        tips = data["newslist"][0]["tips"]
+        return pop,tips
+
 
   
 def get_random_color():
