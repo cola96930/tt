@@ -70,7 +70,8 @@ def kqzl():
     data = res.read()
     data = json.loads(data)
     return data["newslist"][0]["quality"]
-
+    return data["newslist"][0]["time"]
+  
 def tq():
     conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
     params = urllib.parse.urlencode({'key':'a59bb78a1149fb897531644c84f7d262','area':'上海市'})
