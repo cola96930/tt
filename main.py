@@ -68,7 +68,7 @@ def kqzl():
     conn.request('POST','/aqi/index',params,headers)
     res = conn.getresponse()
     data = res.read()
-    return data["newslist"][0]["quality"]
+    print(data.decode('utf-8'))
   
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
