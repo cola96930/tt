@@ -69,8 +69,8 @@ def kqzl():
     res = conn.getresponse()
     data = res.read()
     data = json.loads(data)
-    return data["newslist"][0]["quality"]
-    return data["newslist"][0]["time"]
+    data = "质量"+str(data["newslist"][0]["quality"])+"时间"+str(data["newslist"][0]["time"])
+    return data
   
 def tq():
     conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
