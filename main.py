@@ -79,7 +79,10 @@ def tq():
     res = conn.getresponse()
     data = res.read()
     data = json.loads(data)
-    return data["newslist"][0]["tips"]
+    pop = data["newslist"][0]["pop"]
+    tips = data["newslist"][0]["tips"]
+    return pop,tips
+
   
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
